@@ -16,6 +16,12 @@ class GnuPratchettHeader
      */
     public function handle($request, Closure $next)
     {
-        //
+        $response = $next($request);
+
+        if ($response instanceof Response) {
+            $response->header('X-Clacks-Overhead', 'GNU Terry Pratchett');
+        }
+
+        return $response;
     }
 }
