@@ -5,7 +5,7 @@ namespace BWibrew\GnuPratchett;
 use Closure;
 use Illuminate\Http\Response;
 
-class GnuPratchettHeader
+class GnuPratchettMiddleware
 {
     /**
      * Handle an incoming request.

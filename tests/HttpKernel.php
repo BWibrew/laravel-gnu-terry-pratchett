@@ -14,6 +14,6 @@ class HttpKernel extends Kernel
      * @var array
      */
     protected $middleware = [
-        \BWibrew\GnuPratchett\GnuPratchettHeader::class,
+        \BWibrew\GnuPratchett\GnuPratchettMiddleware::class,
     ];
 }
