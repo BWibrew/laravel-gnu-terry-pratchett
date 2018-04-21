@@ -9,7 +9,7 @@ default_steps: &default_steps
         name: Install system dependencies
         command: |
           sudo apt update -yq
-          if [[ $SETUP = 'lowest' ]]; then
+          if [[ $USE_MCRYPT = 'true' ]]; then
             sudo apt install libmcrypt-dev -yq;
             sudo docker-php-ext-install -j$(nproc) mcrypt;
           fi
@@ -49,6 +49,7 @@ jobs:
       - image: circleci/php:5.6
     environment:
       SETUP: stable
+      USE_MCRYPT: false
 
     <<: *default_steps
 
@@ -57,6 +58,7 @@ jobs:
       - image: circleci/php:5.6
     environment:
       SETUP: lowest
+      USE_MCRYPT: true
 
     <<: *default_steps
 
@@ -65,6 +67,7 @@ jobs:
       - image: circleci/php:7.0
     environment:
       SETUP: stable
+      USE_MCRYPT: false
 
     <<: *default_steps
 
@@ -73,6 +76,7 @@ jobs:
       - image: circleci/php:7.0
     environment:
       SETUP: lowest
+      USE_MCRYPT: true
 
     <<: *default_steps
 
@@ -81,6 +85,7 @@ jobs:
       - image: circleci/php:7.1
     environment:
       SETUP: stable
+      USE_MCRYPT: false
 
     <<: *default_steps
 
@@ -89,6 +94,7 @@ jobs:
       - image: circleci/php:7.1
     environment:
       SETUP: lowest
+      USE_MCRYPT: true
 
     <<: *default_steps
 
@@ -97,6 +103,7 @@ jobs:
       - image: circleci/php:7.2
     environment:
       SETUP: stable
+      USE_MCRYPT: false
 
     <<: *default_steps
 
@@ -105,6 +112,7 @@ jobs:
       - image: circleci/php:7.2
     environment:
       SETUP: lowest
+      USE_MCRYPT: false
 
     <<: *default_steps
 
