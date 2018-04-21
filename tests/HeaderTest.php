@@ -10,10 +10,10 @@ class HeaderTest extends TestCase
     /** @test */
     public function it_sends_the_x_clacks_overhead_header_down_the_line()
     {
-        $getResponse = $this->get('/');
-        $postResponse = $this->post('/');
+        $response = $this->call('GET', '/');
 
-        $getResponse->assertHeader($this->headerName, $this->headerValue);
-        $postResponse->assertHeader($this->headerName, $this->headerValue);
+        $this->assertTrue($response->headers->has($this->headerName));
+
+        $this->assertEquals($this->headerValue, $response->headers->get($this->headerName));
     }
 }

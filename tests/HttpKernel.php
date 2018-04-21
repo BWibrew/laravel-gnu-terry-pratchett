@@ -2,7 +2,7 @@
 
 namespace BWibrew\GnuPratchett\Tests;
 
-use Illuminate\Foundation\Http\Kernel;
+use Orchestra\Testbench\Http\Kernel;
 
 class HttpKernel extends Kernel
 {
