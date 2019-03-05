@@ -27,6 +27,6 @@ class TestCase extends Orchestra
      */
     protected function resolveApplicationHttpKernel($app)
     {
-        $app->singleton('Illuminate\Contracts\Http\Kernel', 'BWibrew\GnuPratchett\Tests\HttpKernel');
+        $app->singleton(\Illuminate\Contracts\Http\Kernel::class, HttpKernel::class);
     }
 }

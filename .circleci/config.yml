@@ -15,23 +15,11 @@ default_steps: &default_steps
           fi
 
     # Composer
-    - restore_cache:
-        name: Restore Composer package cache
-        keys:
-          - composer-packages-{{ .Branch }}-{{ checksum "composer.json" }}
-          - composer-packages-{{ .Branch }}
-          - composer-packages-master
-          - composer-packages-
     - run:
         name: Run Composer
         command: |
-          if [[ $SETUP = 'stable' ]]; then  composer update --prefer-dist --no-interaction --prefer-stable --no-suggest; fi
-          if [[ $SETUP = 'lowest' ]]; then  composer update --prefer-dist --no-interaction --prefer-stable --no-suggest --prefer-lowest; fi
-    - save_cache:
-        name: Save Composer package cache
-        key: composer-packages-{{ .Branch }}-{{ checksum "composer.json" }}
-        paths:
-          - vendor
+          if [[ $SETUP = 'stable' ]]; then COMPOSER_MEMORY_LIMIT=-1 composer update --prefer-dist --no-interaction --prefer-stable --no-suggest; fi
+          if [[ $SETUP = 'lowest' ]]; then COMPOSER_MEMORY_LIMIT=-1 composer update --prefer-dist --no-interaction --prefer-stable --no-suggest --prefer-lowest; fi
 
     # Tests
     - run:
@@ -49,7 +37,7 @@ jobs:
       - image: circleci/php:5.6
     environment:
       SETUP: stable
-      USE_MCRYPT: false
+      USE_MCRYPT: true
 
     <<: *default_steps
 
@@ -67,7 +55,7 @@ jobs:
       - image: circleci/php:7.0
     environment:
       SETUP: stable
-      USE_MCRYPT: false
+      USE_MCRYPT: true
 
     <<: *default_steps
 
@@ -94,7 +82,7 @@ jobs:
       - image: circleci/php:7.1
     environment:
       SETUP: lowest
-      USE_MCRYPT: true
+      USE_MCRYPT: false
 
     <<: *default_steps
 
@@ -116,6 +104,24 @@ jobs:
 
     <<: *default_steps
 
+  php-7.3:
+    docker:
+      - image: circleci/php:7.3
+    environment:
+      SETUP: lowest
+      USE_MCRYPT: false
+
+    <<: *default_steps
+
+  php-7.3-lowest:
+    docker:
+      - image: circleci/php:7.3
+    environment:
+      SETUP: lowest
+      USE_MCRYPT: false
+
+    <<: *default_steps
+
 workflows:
   version: 2
   build:
@@ -128,3 +134,5 @@ workflows:
       - php-7.1-lowest
       - php-7.2
       - php-7.2-lowest
+      - php-7.3
+      - php-7.3-lowest
