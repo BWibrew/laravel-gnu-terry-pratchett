@@ -122,6 +122,24 @@ jobs:
 
     <<: *default_steps
 
+  php-7.4:
+    docker:
+      - image: circleci/php:7.4
+    environment:
+      SETUP: lowest
+      USE_MCRYPT: false
+
+    <<: *default_steps
+
+  php-7.4-lowest:
+    docker:
+      - image: circleci/php:7.4
+    environment:
+      SETUP: lowest
+      USE_MCRYPT: false
+
+    <<: *default_steps
+
 workflows:
   version: 2
   build:
@@ -136,3 +154,5 @@ workflows:
       - php-7.2-lowest
       - php-7.3
       - php-7.3-lowest
+      - php-7.4
+      - php-7.4-lowest
